@@ -22,7 +22,7 @@ export default class Map extends Component {
     accessToken: accessToken,
     crossOrigin: true
     }).addTo(map);
-
+    // testing
     map.on('click', this.clickOnMap);
   }
 
@@ -38,7 +38,7 @@ export default class Map extends Component {
         if (index > 0) {evt.target.removeLayer(evt.target._layers[layer])}
       })
     }
-    
+
     this.setState({ latitude: lat, longitude: lng}, () => {
       if (lat !== null && lng !== null) {
         L.marker([ lat, lng], { draggable: true }).addTo(evt.target);

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import to from 'await-to-js';
+import Map from './components/map';
 import './stylesheets/App.scss';
 
 class App extends Component {
@@ -12,22 +14,26 @@ class App extends Component {
   }
 
   async componentDidMount(){
-    const response = await axios('https://data.sfgov.org/resource/6a9r-agq8.json');
-    const data = await response.data;
-    this.setState({ foodTrucks: data });
-  }
+    let response, error, data;
+    [error, response] = await to(axios('https://data.sfgov.org/resource/6a9r-agq8.json'));
 
-  testButton = async(evt) => {
-    evt.persist();
+    if (error) {
+      console.error(error);
+    }
+    if (!response) {
+      console.log('Promise unresolved. No response...');
+    } else {
+      data = await response.data;
+      this.setState({ foodTrucks: data });
+    }
   }
 
   render() {
     return (<>
       <div id="App">
-        <button onClick={this.testButton}>Test</button><br/>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi praesentium unde, debitis molestiae tempore itaque aperiam. Optio laborum aperiam saepe quis magnam praesentium harum minus expedita repudiandae accusamus sequi eos, repellat in dicta illo temporibus at qui quo numquam amet!
       </div>
-      <div id="mapid"></div>
+      <Map/>
     </>);
   }
 }

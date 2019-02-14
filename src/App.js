@@ -1,31 +1,14 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import to from 'await-to-js';
+import React from 'react';
+import { connect } from 'react-redux';
+
 import Map from './components/map';
+import * as _actions from './redux/actions/baseActions';
 import './stylesheets/App.scss';
 
-class App extends Component {
+class App extends React.Component {
 
-  state = {
-    foodTrucks : [],
-    nearbyFoodTrucks: [],
-    longitude: null,
-    latitude: null,
-  }
-
-  async componentDidMount(){
-    let response, error, data;
-    [error, response] = await to(axios('https://data.sfgov.org/resource/6a9r-agq8.json'));
-
-    if (error) {
-      console.error(error);
-    }
-    if (!response) {
-      console.log('Promise unresolved. No response...');
-    } else {
-      data = await response.data;
-      this.setState({ foodTrucks: data });
-    }
+  componentDidMount(){
+    this.props.getTrucks();
   }
 
   render() {
@@ -38,4 +21,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => (
+  {
+    foodTrucks: state.base.foodTrucks
+  }
+)
+
+const mapDispatchToProps = (dispatch) => (
+  {
+    getTrucks: () => dispatch(_actions.getTrucks())
+  }
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

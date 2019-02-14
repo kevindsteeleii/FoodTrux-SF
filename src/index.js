@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './stylesheets/index.scss';
 import App from './App';
+import { Provider } from 'react-redux';
+import {store} from './redux/store';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <Router>
-    <Route path='/' component={App}/>
-  </Router>
+  <Provider store={store}>
+    <Router>
+      <Route path='/' component={App}/>
+    </Router>
+  </Provider>
   
   , document.getElementById('root'));
 

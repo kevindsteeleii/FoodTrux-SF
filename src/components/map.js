@@ -22,7 +22,7 @@ export default class Map extends Component {
     accessToken: accessToken,
     crossOrigin: true
     }).addTo(map);
-    // testing
+    // testing again
     map.on('click', this.clickOnMap);
   }
 

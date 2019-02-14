@@ -1,35 +1,46 @@
-import React, { Component } from 'react';
+import React from 'react';
 import L from 'leaflet';
 import { MAP_TOKEN as accessToken } from '../secret';
 import '../stylesheets/Components.scss';
 
-export default class Map extends Component {
+export default class Map extends React.Component {
 
   state = {
-    latitude: 37.77,
-    longitude: -122.42,
-    zoom: 13
+    latitude: 37.7946,
+    longitude: -122.3999,
+    zoom: 13  
   }
 
-  async componentDidMount(){
+  componentDidMount(){
     const { latitude, longitude, zoom } = this.state;
 
-    const map = L.map('map').setView([latitude, longitude], zoom);
+    let map = L.map('map').setView([latitude, longitude], zoom);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
+    minZoom: 12,
     id: 'mapbox.streets',
+    
     accessToken: accessToken,
     crossOrigin: true
     }).addTo(map);
-    // testing yet again
+    map.invalidateSize();
+    this.mapEvents(map);
+  }
+
+  /* Used to register/add map events and the like */
+  mapEvents = (map) => {
     map.on('click', this.clickOnMap);
+  }
+
+  componentDidUpdate() {
+    // fixes the partial loading problem with leaflet
+    window.dispatchEvent(new Event('resize'));
   }
 
   // click on map -> add a marker, marker lat and long kept in store
   clickOnMap = (evt) => {
     const { lat, lng } = evt.latlng;
-    const { zoom } = this.state;
 
     let otherLayers = Object.keys(evt.target._layers);
 
@@ -40,8 +51,12 @@ export default class Map extends Component {
     }
 
     this.setState({ latitude: lat, longitude: lng}, () => {
+
       if (lat !== null && lng !== null) {
         L.marker([ lat, lng], { draggable: true }).addTo(evt.target);
+        // debugger;
+        evt.target.options.center = [lat, lng];
+        evt.target.panTo(evt.latlng);
       }
     })
   }

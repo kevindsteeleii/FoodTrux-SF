@@ -1,4 +1,4 @@
-import { CHANGE_COORDINATES, CHANGE_ZOOM, FILTER_RESULT, RADIUS_CHANGE, GET_ALL_TRUCKS, FILTER_TRUCKS, GET_NEARBY_TRUCKS, ASYNC_ERROR  } from '../../constants';
+import * as _ from '../../constants';
 
 const initialState = {
   latitude: JSON.parse(localStorage.getItem('latitude')) || 37.7946,
@@ -8,44 +8,49 @@ const initialState = {
   filter: JSON.parse(localStorage.getItem('filter')) || '',
   foodTrucks : [],
   filteredTrucks: [],
-  nearbyTrucks: []
-}
+  nearbyTrucks: [],
+  selectedTruck: null
+};
 
 export const base = (state = initialState, { type, payload }) => {
   /* lattitude, longitude, zoom, filter, and state local variables for changing state */
-  let latitude, longitude, zoom, filter, radius, foodTrucks, filteredTrucks, nearbyTrucks, copyState = {...state};
+  let latitude, longitude, zoom, filter, radius, foodTrucks, filteredTrucks, nearbyTrucks, selectedTruck;
 
   switch(type){
-    case CHANGE_COORDINATES:
+    case _.CHANGE_COORDINATES:
       [latitude, longitude] = payload;
       return {...state, latitude, longitude};
 
-    case CHANGE_ZOOM:
+    case _.CHANGE_ZOOM:
       zoom = payload;
       return {...state, zoom};
 
-    case FILTER_RESULT:
+    case _.FILTER_BY:
       filter = payload;
       return {...state, filter};
 
-    case RADIUS_CHANGE:
+    case _.RADIUS_CHANGE:
       radius = payload;
       return {...state, radius};
 
-    case GET_ALL_TRUCKS:
+    case _.GET_ALL_TRUCKS:
       foodTrucks = payload;
       return {...state, foodTrucks};
 
-    case FILTER_TRUCKS:
+    case _.FILTER_TRUCKS:
       filteredTrucks = payload;
       return {...state, filteredTrucks};
 
-    case GET_NEARBY_TRUCKS:
+    case _.GET_NEARBY_TRUCKS:
       nearbyTrucks = payload;
       return {...state, nearbyTrucks};
 
+    case _.SELECT_TRUCK:
+      selectedTruck = payload;
+      return {...state, selectedTruck};
+
     
-    case ASYNC_ERROR:
+    case _.ASYNC_ERROR:
     default:
       return state;
   }

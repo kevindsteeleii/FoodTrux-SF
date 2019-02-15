@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as _ from '../../constants';
 
 export const changeCoords = (latitude, longitude) => {
-  return (dispatch) => dispatch({type: _.CHANGE_COORDINATES, payload:{latitude, longitude}})
+  return (dispatch) => dispatch({type: _.CHANGE_COORDINATES, payload:[latitude, longitude]})
 }
 
 export const zoom = (payload) => {

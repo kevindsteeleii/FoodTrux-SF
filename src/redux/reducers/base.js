@@ -18,35 +18,34 @@ export const base = (state = initialState, { type, payload }) => {
   switch(type){
     case CHANGE_COORDINATES:
       [latitude, longitude] = payload;
-      return {copyState, latitude, longitude};
+      return {...state, latitude, longitude};
 
     case CHANGE_ZOOM:
       zoom = payload;
-      return {copyState, zoom};
+      return {...state, zoom};
 
     case FILTER_RESULT:
       filter = payload;
-      return {copyState, filter};
+      return {...state, filter};
 
     case RADIUS_CHANGE:
       radius = payload;
-      return {copyState, radius};
+      return {...state, radius};
 
     case GET_ALL_TRUCKS:
       foodTrucks = payload;
-      return {copyState, foodTrucks};
+      return {...state, foodTrucks};
 
     case FILTER_TRUCKS:
       filteredTrucks = payload;
-      return {copyState, filteredTrucks};
+      return {...state, filteredTrucks};
 
     case GET_NEARBY_TRUCKS:
       nearbyTrucks = payload;
-      return {copyState, nearbyTrucks};
+      return {...state, nearbyTrucks};
 
+    
     case ASYNC_ERROR:
-      return copyState;
-
     default:
       return state;
   }

@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Map from './components/map';
+import Map from './mapComponents/map';
+import TruckListing from './containers/truckListing';
 import * as _actions from './redux/actions/baseActions';
 import './stylesheets/App.scss';
 
@@ -17,6 +18,7 @@ class App extends React.Component {
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi praesentium unde, debitis molestiae tempore itaque aperiam. Optio laborum aperiam saepe quis magnam praesentium harum minus expedita repudiandae accusamus sequi eos, repellat in dicta illo temporibus at qui quo numquam amet!
       </div>
       <Map/>
+      <TruckListing/>
     </>);
   }
 }

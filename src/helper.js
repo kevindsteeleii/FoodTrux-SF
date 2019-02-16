@@ -1,7 +1,7 @@
 /* Helper methods, to decrease bloat and to house general purpose stuff */
 import R from './constants';
 
-/* Get distance from the center of the selected point */
+/* Haversine Formula: Gets the 'as the crow flies' distance b/n two points on Earth */
 export const distanceInMiles = ([centerLat, centerLng], [localLat, localLng]) => {
   /* Distance b/n latitudes and longitudes */
   const PI = Math.PI;

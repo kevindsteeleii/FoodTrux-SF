@@ -17,13 +17,16 @@ class Map extends React.Component {
     maxZoom: 18,
     minZoom: 12,
     id: 'mapbox.streets',
-    
     accessToken: accessToken,
-    crossOrigin: true
+    keepBuffer: 3
     }).addTo(map);
-    map.invalidateSize();
+
+    // fixes partial loads with a manual resizing set asynchronously
+    setTimeout(()=> {
+      map.invalidateSize();
+    }, 100)
+    
     this.mapEvents(map);
-    window.dispatchEvent(new Event('resize'));
   }
 
   componentDidUpdate() {
@@ -33,7 +36,7 @@ class Map extends React.Component {
 
   /* Used to register/add map events and the like */
   mapEvents = (map) => {
-    map.on('click', this.clickOnMap);
+    map.on('click', evt => this.clickOnMap(evt, map));
     map.on('zoom', this.zoomMap)
   }
 
@@ -42,7 +45,7 @@ class Map extends React.Component {
   }
 
   // click on map -> add a marker, marker lat and long kept in store
-  clickOnMap = (evt) => {
+  clickOnMap = (evt, map) => {
     const { lat, lng } = evt.latlng;
 
     let otherLayers = Object.keys(evt.target._layers);
@@ -55,11 +58,16 @@ class Map extends React.Component {
 
     this.props.changeCoordinates(lat, lng);
 
-    if (lat !== null && lng !== null) {
-      L.marker([ lat, lng], { draggable: true }).addTo(evt.target);
-      evt.target.options.center = [lat, lng];
-      evt.target.panTo(evt.latlng);
-    }
+    const marker = L.marker([ lat, lng], { draggable: true, interactive: true }).addTo(evt.target);
+    map.invalidateSize();
+    evt.target.options.center = [lat, lng];
+    evt.target.panTo(evt.latlng);
+    marker.on('dragend', this.handleMarkerDrag);
+  }
+
+  handleMarkerDrag = (e) => {
+    let {lat, lng} = e.target._latlng;
+    this.props.changeCoordinates(lat, lng);
   }
 
   render() {
@@ -74,12 +82,13 @@ class Map extends React.Component {
 const mapStateToProps = state => ({
   latitude: state.base.latitude,
   longitude: state.base.longitude,
-  zoom: state.base.zoom
-})
+  zoom: state.base.zoom,
+  filteredTrucks: state.filter.filteredTrucks
+});
 
 const mapDispatchToProps = dispatch => ({
   changeCoordinates: (lat, lng) => dispatch(_.changeCoords(lat, lng)),
   changeZoomLevel: (zoom) => dispatch(_.zoom(zoom))
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

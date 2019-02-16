@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { MAP_TOKEN as accessToken } from '../secret';
 import * as _ from '../redux/actions/baseActions';
-import '../stylesheets/Components.scss';
+import '../stylesheets/mapComponents.scss';
 
 class Map extends React.Component {
 

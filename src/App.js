@@ -1,13 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Title from './components/title';
+import FilterDash from './containers/filterDashboard';
 import Map from './mapComponents/map';
-import TruckListing from './containers/truckListing';
+import TruckList from './containers/truckList';
+
 import * as _actions from './redux/actions/baseActions';
+import * as _filter from './redux/actions/filterActions';
 import './stylesheets/App.scss';
 
 class App extends React.Component {
-
+  
   componentDidMount(){
     this.props.getTrucks();
   }
@@ -15,10 +19,12 @@ class App extends React.Component {
   render() {
     return (<>
       <div id="App">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi praesentium unde, debitis molestiae tempore itaque aperiam. Optio laborum aperiam saepe quis magnam praesentium harum minus expedita repudiandae accusamus sequi eos, repellat in dicta illo temporibus at qui quo numquam amet!
+        <FilterDash>
+          <Title/>
+        </FilterDash>
+        <Map/>
+        <TruckList/>
       </div>
-      <Map/>
-      <TruckListing/>
     </>);
   }
 }
@@ -31,7 +37,8 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps = (dispatch) => (
   {
-    getTrucks: () => dispatch(_actions.getTrucks())
+    getTrucks: () => dispatch(_actions.getTrucks()),
+    getFilteredTrucks: (val) => dispatch(_filter.getFilteredTrucks(val)),
   }
 )
 

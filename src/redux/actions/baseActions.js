@@ -9,7 +9,10 @@ export const zoom = (payload) => {
   return (dispatch) => dispatch({ type: _.CHANGE_ZOOM, payload })
 }
 
-// wanted to add async/await to but... it doesn't play nice so...
+export const selectTruck = (payload) => {
+  return (dispatch) => dispatch({ type: _.SELECT_TRUCK, payload })
+}
+
 /* Returns array of objects of usable food trucks */
 export const getTrucks = () => {
   return (dispatch) => {

@@ -5,8 +5,8 @@ export const filterByRadius = (val) => {
 }
 
 // turns on the filter by food items
-export const filterByFoodItems = () => {
-  return (dispatch) => { dispatch({type: _.FILTER_BY_FOOD_ITEMS, payload: true}) }
+export const filterByFoodItems = (val) => {
+  return (dispatch) => { dispatch({type: _.FILTER_BY_FOOD_ITEMS, payload: val}) }
 }
 
 // adds single food search term to list/array of terms
@@ -33,5 +33,5 @@ export const filterIfOpen = (val) => {
 
 // onComponentDidMount -> filter vals are checked and filtered list is returned 
 export const getFilteredTrucks = (val) => {
-  return(dispatch) =>  { dispatch({ type: _.FILTERED_TRUCKS, payload: val}) }
+  return (dispatch) =>  { dispatch({ type: _.FILTERED_TRUCKS, payload: val}) }
 }

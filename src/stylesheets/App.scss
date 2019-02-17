@@ -3,6 +3,6 @@
 #App {
   text-align: center;
   display: grid;
-  grid-template-rows: 10vh 10px 1fr 1vh;
-  grid-template-columns: 2vw 47.5vw 1vw 47.5vw 2vw;
+  grid-template-rows: auto 3vh 1fr 1vh;
+  grid-template-columns: 2vw 1fr 3vw 1fr 2vw;
 }

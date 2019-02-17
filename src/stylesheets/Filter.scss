@@ -1,0 +1,51 @@
+@import "index.scss";
+
+div#filter-dash{
+  background-color: black;
+  padding: 0.5vh;
+  border-top: 2px solid black;
+  position: relative;
+
+  p {
+    padding: 1vh auto;
+    color: white;
+    transition: all .4s ease;
+
+    span {
+      margin-left: 1vw;
+    }
+  }
+
+  p:hover {
+    z-index: 1;
+    color: $title-green;
+    cursor: pointer;
+  }
+}
+
+div#filter-dropdown {
+  position: relative;
+  box-sizing: border-box;
+  // z-index: 1;
+  width: 100%;
+  background-color: white;
+  transition: height .2s ease-out;
+}
+
+div.hidden {
+  height: 0px;
+  // * {
+  //   visibility: hidden;
+  //   opacity: 0;
+  // }
+}
+
+div.visible {
+  height: 15vh;
+  
+  // * {
+  //   visibility: visible;
+  //   opacity: 1;
+  // }
+  
+}

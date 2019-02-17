@@ -1,6 +1,7 @@
 /* ACTION.TYPES as constants*/
 // base Reducer action types
 export const CHANGE_COORDINATES = 'CHANGE_COORDINATES';
+export const TOGGLE_MODAL = 'TOGGLE_MODAL';
 export const CHANGE_ZOOM = 'CHANGE_ZOOM';
 export const RADIUS_CHANGE = 'RADIUS_CHANGE';
 export const GET_ALL_TRUCKS = 'GET_ALL_TRUCKS';

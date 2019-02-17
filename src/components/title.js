@@ -3,7 +3,7 @@ import "../stylesheets/Components.scss";
 
 const Title = () => {
   return(<div id="title">
-    <p>FOODTRUX-SF</p>
+    <h1>FOODTRUX-SF</h1>
   </div>)
 }
 

@@ -1,17 +1,18 @@
 import * as _ from '../../constants';
 
 const initialState = {
-  latitude: JSON.parse(localStorage.getItem('latitude')) || 37.7946,
-  longitude: JSON.parse(localStorage.getItem('longitude')) || -122.3999,
-  zoom: JSON.parse(localStorage.getItem('zoom')) || 13,
-  radius: JSON.parse(localStorage.getItem('radius')) || 0.0015,
+  latitude: 37.7946,
+  longitude: -122.3999,
+  zoom: 13,
+  radius: 0.0015,
   foodTrucks : [],
-  selectedTruck: null
+  selectedTruck: null,
+  modalToggle: false
 };
 
 export const base = (state = initialState, { type, payload }) => {
   /* lattitude, longitude, zoom, filter, and state local variables for changing state */
-  let latitude, longitude, zoom, radius, foodTrucks, selectedTruck;
+  let latitude, longitude, zoom, radius, foodTrucks, selectedTruck, modalToggle;
 
   switch(type){
     case _.CHANGE_COORDINATES:
@@ -34,7 +35,10 @@ export const base = (state = initialState, { type, payload }) => {
       selectedTruck = payload;
       return {...state, selectedTruck};
 
-    
+    case _.TOGGLE_MODAL:
+      modalToggle = payload;
+      return {...state, modalToggle}
+
     case _.ASYNC_ERROR:
     default:
       return state;

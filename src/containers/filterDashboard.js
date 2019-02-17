@@ -1,47 +1,54 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import FilterDropDown from './filterDropDown';
 import * as _filter from '../redux/actions/filterActions';
-import '../stylesheets/Components.scss';
+import '../stylesheets/Filter.scss';
 
 /* HOC used to house logic and inputs for the filtering functionality and their options */
 class FilterDashboard extends React.Component{
-  // state will handle the needs of interactivity for the filter state/s
-  state = {
-    
-  }
 
+  state = {
+    dropDownToggle: false
+  }
   componentDidUpdate() {
     // set initial value of local filtered trucks to all and then pass through multiple if's to determine if it needs to be filtered
     const { getFilteredTrucks, foodTrucks } = this.props;
     let filteredTrucks = foodTrucks;
-    // set filter stuff here
+    //_NOTE: set filter stuff here
     //check for _____ filter and adjust accordingly
 
     getFilteredTrucks(filteredTrucks);
   }
 
-  render() {
-    const { children } = this.props;
+  // toggles the dropdown menu
+  handleClick = evt => {
+    const { dropDownToggle } = this.state;
+    this.setState({ dropDownToggle: !dropDownToggle });
+    evt.persist();
+  }
 
-    return(<><div id="filter-dash">
-      {children}
-      <h1>Filter DashBoard</h1>
+  render() {
+    const { dropDownToggle } = this.state;
+
+    return(<><div id="filter-dash" onClick={this.handleClick}>
+      <p className="title">Filter DashBoard <span><i className="fas fa-filter"/></span></p> 
+      <FilterDropDown toggle={dropDownToggle}>
+        <div>Testing</div>
+      </FilterDropDown>
     </div></>);
   }
 }
 
 const mapStateToProps = (state) => ({
-  foodTrucks: state.base.foodTrucks
-})
+  foodTrucks: state.base.foodTrucks,
+  filterByRadius: state.filter.filterByRadius,
+  filterByFoodItems: state.filter.filterByFoodItems,
+  filterWhenOpen: state.filter.filterWhenOpen
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  filterByRadius: (val) => dispatch(_filter.filterByRadius(val)),
-  filterByFoodItems: (val) => dispatch(_filter.filterByFoodItems(val)),
-  growFoodList: (val) => dispatch(_filter.growFoodList(val)),
-  shrinkFoodList: (val, foodList) => dispatch(_filter.shrinkFoodList(val, foodList)),
-  clearFoodList: () => dispatch(_filter.clearFoodList()),
-  getFilteredTrucks: (val) => dispatch(_filter.getFilteredTrucks(val)),
-})
+  getFilteredTrucks: (val) => dispatch(_filter.getFilteredTrucks(val))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterDashboard);

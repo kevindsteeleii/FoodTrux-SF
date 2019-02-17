@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Header from './containers/header';
 import Title from './components/title';
 import FilterDash from './containers/filterDashboard';
 import Map from './mapComponents/map';
@@ -19,9 +20,10 @@ class App extends React.Component {
   render() {
     return (<>
       <div id="App">
-        <FilterDash>
+        <Header>
           <Title/>
-        </FilterDash>
+          <FilterDash/>
+        </Header>
         <Map/>
         <TruckList/>
       </div>

@@ -9,7 +9,7 @@ class FilterDropDown extends React.Component{
   state = {
   }
   
-  componentDidMount() {
+  componentDidUpdate() {
     this.checkToggle(this.props);
   }
 
@@ -19,6 +19,7 @@ class FilterDropDown extends React.Component{
     if (toggle !== prevToggle) {
       this.checkToggle(this.props);
     }
+    return null;
   }
 
   checkToggle = ({toggle}) => {

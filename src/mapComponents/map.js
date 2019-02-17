@@ -2,31 +2,36 @@ import React from 'react';
 import L from 'leaflet';
 import { connect } from 'react-redux';
 
-import { MAP_TOKEN as accessToken } from '../secret';
+import { MAPBOX_API_TOKEN as accessToken, THUNDER_FOREST_API_TOKEN  } from '../secret';
 import * as _ from '../redux/actions/baseActions';
-import '../stylesheets/mapComponents.scss';
+import '../stylesheets/MapComponents.scss';
 
 class Map extends React.Component {
 
   componentDidMount(){
     const { latitude, longitude, zoom } = this.props;
 
-    let map = L.map('map').setView([latitude, longitude], zoom);
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    minZoom: 12,
-    id: 'mapbox.streets',
-    accessToken: accessToken,
-    keepBuffer: 3
-    }).addTo(map);
+    const map = new L.map('map', {
+      center: new L.LatLng(latitude, longitude), 
+      zoom
+    });
 
+    const tileURL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+    const mapTileLayer = new L.TileLayer(tileURL, {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18, 
+      minZoom: 12, 
+      accessToken, 
+      id: 'mapbox.streets'
+    });
+
+    map.addLayer(mapTileLayer);
     // fixes partial loads with a manual resizing set asynchronously
     setTimeout(()=> {
       map.invalidateSize();
     }, 100)
-    
     this.mapEvents(map);
+    this.mapLayerOperations(mapTileLayer);
   }
 
   componentDidUpdate() {
@@ -38,6 +43,11 @@ class Map extends React.Component {
   mapEvents = (map) => {
     map.on('click', evt => this.clickOnMap(evt, map));
     map.on('zoom', this.zoomMap)
+  }
+
+  /* Used for map tile stuff */
+  mapLayerOperations = (layer) => {
+
   }
 
   zoomMap = evt => {

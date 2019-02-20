@@ -17,8 +17,8 @@ class Map extends React.Component {
       zoom
     });
 
-    const token = process.env.DEV_ACCESS_TOKEN || require('../secret').MAPBOX_API_TOKEN;
-
+    const token = require('../secret').MAPBOX_API_TOKEN;
+    
     const tileURL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
     const mapTileLayer = new L.TileLayer(tileURL, {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',

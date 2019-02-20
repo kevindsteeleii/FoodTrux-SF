@@ -29,4 +29,4 @@ export const FILTERED_TRUCKS = 'FILTERED_TRUCKS';
 export const ALL_TRUCKS_URL = 'https://data.sfgov.org/resource/6a9r-agq8.json'
 
 /* Measurements and such */
-export const R = 3959; // earth's radius in miles
+// export const R = 3959; // earth's radius in miles

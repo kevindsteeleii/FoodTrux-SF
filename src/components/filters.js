@@ -4,6 +4,7 @@ import connect from 'react-redux';
 import * as _filter from '../redux/actions/filterActions';
 import '../stylesheets/Filter.scss';
 
+// used to filter for the various 
 const Filters = (props) => {
   return(<>
     <div id="filter-contents">
@@ -19,10 +20,10 @@ const mapStateToProps = (state) => ({
   filterFoodList: state.filter.filteredFoodList
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  filterByRadius: (val) => dispatch(_filter.filterByRadius(val)),
-  filterByFoodItems: (val) => dispatch(_filter.filterByFoodItems(val)),
-  
-})
+// const mapDispatchToProps = (dispatch) => ({
+//   filterByRadius: (val) => dispatch(_filter.filterByRadius(val)),
+//   filterByFoodItems: (val) => dispatch(_filter.filterByFoodItems(val)),
+
+// })
 
 export default connect(mapStateToProps)(Filters);

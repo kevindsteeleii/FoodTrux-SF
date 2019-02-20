@@ -2,7 +2,7 @@ import React, {useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import TruckItem from '../components/truckItem';
-import '../stylesheets/Components.scss';
+import '../stylesheets/components.scss';
 
 const TruckList = (props) => {
   const trucks = getFilteredTrucks(props);

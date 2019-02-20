@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../stylesheets/Filter.scss';
+import '../stylesheets/filter.scss';
 
 class FilterDropDown extends React.Component{
 

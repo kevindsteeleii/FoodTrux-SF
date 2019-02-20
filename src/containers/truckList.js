@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import * as _help from '../helper';
 import TruckItem from '../components/truckItem';
-import '../stylesheets/Components.scss';
+import '../stylesheets/components.scss';
 
 const TruckList = (props) => {
   const { 

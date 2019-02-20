@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 // import { MAPBOX_API_TOKEN as accessToken } from '../secret';
 import * as _ from '../redux/actions/baseActions';
-import '../stylesheets/MapComponents.scss';
+import '../stylesheets/mapComponents.scss';
 
 class Map extends React.Component {
 

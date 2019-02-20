@@ -1,9 +1,9 @@
 @import "index.scss";
 
 div#map {
-  height: 36vw;
-  width: 36vw;
-  // overflow: hidden;
+  position: relative;
+  height: 40vw;
+  width: 40vw;
   border: 2px transparent solid;
   cursor: pointer;
   grid-area: 3 / 2 / 4/ 3;

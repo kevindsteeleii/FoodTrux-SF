@@ -18,7 +18,11 @@ status: "APPROVED"
 */
 
 const truckItem = (props) =>{
-  const { applicant } = props.truck
+  const { applicant, fooditems } = props.truck
+  if (!!fooditems) {
+    // code to access food listing starts
+    // refer to flowchart diagram in black book
+  }
   return (<>
       <div className="truck-item" onClick={e => handleItemClick(e, props)}>
         <p>{applicant}</p>
@@ -27,21 +31,25 @@ const truckItem = (props) =>{
 }
 
 /* Retrieves food items of truck as an array */
-const getFoodList = (fooditems) => fooditems.replace('.', '').split(': ');
+const getFoodList = (fooditems) => fooditems.replace('.', '').split(/\s*[:&]\s*/)
+  .filter(item => {
+    if (item !== 'Cold Truck') {
+      return item;
+    }
+  });
 
 // handles the onClick for truckItem
 const handleItemClick = (e, props) => {
   const { 
-    address, applicant, dayshours,
-    fooditems, latitude, longitude,
-    schedule, status
+    /* address, applicant, dayshours, */
+    fooditems/* , latitude, longitude,
+    schedule, status */
   } = props.truck;
-
+  const foodList = getFoodList(fooditems);
   const { selectTruck } = props;
-
+  // _TEMPORARY: remove once food list and food hash states work!!
+  console.log(`Food List: ${foodList}`);
   selectTruck(props.truck);
-  // debugger;
-  console.log(e);
 }
 // *TODO: add an action that pops up a modal with expanded detail view of individual truck items
 const mapDispatchToProps = (dispatch) => ({

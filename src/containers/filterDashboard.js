@@ -31,12 +31,14 @@ class FilterDashboard extends React.Component{
   render() {
     const { dropDownToggle } = this.state;
 
-    return(<><div id="filter-dash" onClick={this.handleClick}>
+    return(<>
+    <div id="filter-dash" onClick={this.handleClick}>
       <p className="title">Filter DashBoard <span><i className="fas fa-filter"/></span></p> 
-      <FilterDropDown toggle={dropDownToggle}>
+    </div>
+    <FilterDropDown toggle={dropDownToggle}>
         <div>Testing</div>
-      </FilterDropDown>
-    </div></>);
+    </FilterDropDown>
+    </>);
   }
 }
 

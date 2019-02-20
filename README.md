@@ -4,6 +4,8 @@ FoodTrux-SF
 A real-time service that tells the user what types of food trucks might be found near a specific location on a map.
 -----------
 
+![ScreenShot](./src/_images/screenShot.png)
+
 Project Idea came from [here](https://github.com/team-gary/code-challenge).
 ### Features
 - [x] Use downtown San Francisco as default location

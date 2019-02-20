@@ -6,13 +6,15 @@ const initialState = {
   zoom: 13,
   radius: 0.0015,
   foodTrucks : [],
+  foodList: [],
+  foodHash: {},
   selectedTruck: null,
-  modalToggle: false
+  modalVisible: false
 };
 
 export const base = (state = initialState, { type, payload }) => {
   /* lattitude, longitude, zoom, filter, and state local variables for changing state */
-  let latitude, longitude, zoom, radius, foodTrucks, selectedTruck, modalToggle;
+  let latitude, longitude, zoom, radius, foodTrucks, selectedTruck, modalVisible, foodList, foodHash;
 
   switch(type){
     case _.CHANGE_COORDINATES:
@@ -31,13 +33,21 @@ export const base = (state = initialState, { type, payload }) => {
       foodTrucks = payload;
       return {...state, foodTrucks};
 
+    case _.ADD_TO_FOODLIST:
+      foodList = [...state.foodList, payload];
+      return {...state, foodList};
+
+    case _.ADD_TO_FOOD_HASH:
+      foodHash = payload;
+      return {...state, foodHash};
+
     case _.SELECT_TRUCK:
       selectedTruck = payload;
       return {...state, selectedTruck};
 
     case _.TOGGLE_MODAL:
-      modalToggle = payload;
-      return {...state, modalToggle}
+      modalVisible = payload;
+      return {...state, modalVisible}
 
     case _.ASYNC_ERROR:
     default:

@@ -7,9 +7,11 @@ html {
   scroll-behavior: smooth;
 }
 
- :root, body, *{
+ :root, body{
   margin: 0;
   padding: 0;
+  // overflow will mess up the map since it has to get tiles from outside of its borders
+  // this caused a css contamination
   overflow: hidden;
   font-family: $font-montserrat,
   $font-noto-sans;

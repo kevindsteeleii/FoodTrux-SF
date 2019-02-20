@@ -29,27 +29,27 @@ class Map extends React.Component {
     map.addLayer(mapTileLayer);
 
     const marker = L.marker(L.latLng(latitude, longitude), {
-      draggable: true
-    });
-
-    marker.on('click', e => {
-      debugger;
-      console.log('clicked');
+      draggable: true    
     })
 
     marker.addTo(map);
+    marker.on('click dragend', e => {
+      // e.type is the event so either 'click' or 'dragend'
+      if (e.type === 'dragend'){
+        // change lat and long
+        const { lat, lng} = e.target._latlng;
+        this.props.changeCoordinates(lat, lng);
+      }
+    })
 
     // _NOTE: works but needs tweaking
-    const routeContol = L.Routing.control({
-      waypoints: [
-        L.latLng(latitude, longitude),
-        L.latLng(latitude+.01, longitude)
-      ],
-      show: true,
-      routeWhileDragging: true
-    }).addTo(map);
-
-    L.DomEvent.on(routeContol, 'click', this.mapQuest)
+    // const routeContol = L.Routing.control({
+    //   waypoints: [
+    //     L.latLng(latitude, longitude)
+    //   ],
+    //   show: true,
+    //   routeWhileDragging: true
+    // }).addTo(map);
 
     // fixes partial loads with a manual resizing set asynchronously
     setTimeout(()=> {
@@ -93,7 +93,6 @@ class Map extends React.Component {
   render() {
     return (
       <div id="map">
-        
       </div>
     )
   }

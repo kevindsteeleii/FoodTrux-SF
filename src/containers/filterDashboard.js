@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import FilterDropDown from './filterDropDown';
 import * as _filter from '../redux/actions/filterActions';
-import '../stylesheets/Filter.scss';
+import '../stylesheets/filter.scss';
 
 /* HOC used to house logic and inputs for the filtering functionality and their options */
 class FilterDashboard extends React.Component{

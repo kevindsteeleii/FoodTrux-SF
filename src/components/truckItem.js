@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { selectTruck } from '../redux/actions/baseActions';
-import '../stylesheets/Components.scss';
+import '../stylesheets/components.scss';
 /* Truck Object Internals (for reference)
 address: "147 FREMONT ST"
 applicant: "Mini Mobile Food Catering"

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../stylesheets/Components.scss';
+import '../stylesheets/components.scss';
 // container for title, filter dash and its subsequent menus/tabs
 const Header = (props) => {
   const { children } = props;

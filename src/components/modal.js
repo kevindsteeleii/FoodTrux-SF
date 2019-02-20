@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import '../stylesheets/Components.scss';
+import '../stylesheets/components.scss';
 
 const Modal = (props) => {
   return(<><div id="modal">

@@ -1,14 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-import * as _filter from '../redux/actions/filterActions';
 import '../stylesheets/Filter.scss';
 
 class FilterDropDown extends React.Component{
 
-  state = {
-  }
-  
   componentDidUpdate() {
     this.checkToggle(this.props);
   }
@@ -45,19 +40,4 @@ class FilterDropDown extends React.Component{
   }
 }
 
-const mapStateToProps = (state) => ({
-  foodTrucks: state.base.foodTrucks,
-  filterByRadius: state.filter.filterByRadius,
-  filterByFoodItems: state.filter.filterByFoodItems,
-  filterWhenOpen: state.filter.filterWhenOpen
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  filterByRadius: (val) => dispatch(_filter.filterByRadius(val)),
-  filterByFoodItems: (val) => dispatch(_filter.filterByFoodItems(val)),
-  growFoodList: (val) => dispatch(_filter.growFoodList(val)),
-  shrinkFoodList: (val, foodList) => dispatch(_filter.shrinkFoodList(val, foodList)),
-  clearFoodList: () => dispatch(_filter.clearFoodList())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilterDropDown);
+export default FilterDropDown;

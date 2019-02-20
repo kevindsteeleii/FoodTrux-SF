@@ -1,8 +1,9 @@
 import React from 'react';
 import L from 'leaflet';
+import 'leaflet-routing-machine';
 import { connect } from 'react-redux';
 
-import { MAPBOX_API_TOKEN as accessToken, THUNDER_FOREST_API_TOKEN  } from '../secret';
+import { MAPBOX_API_TOKEN as accessToken } from '../secret';
 import * as _ from '../redux/actions/baseActions';
 import '../stylesheets/MapComponents.scss';
 
@@ -26,12 +27,41 @@ class Map extends React.Component {
     });
 
     map.addLayer(mapTileLayer);
+
+    const marker = L.marker(L.latLng(latitude, longitude), {
+      draggable: true
+    });
+
+    marker.on('click', e => {
+      debugger;
+      console.log('clicked');
+    })
+
+    marker.addTo(map);
+
+    // _NOTE: works but needs tweaking
+    const routeContol = L.Routing.control({
+      waypoints: [
+        L.latLng(latitude, longitude),
+        L.latLng(latitude+.01, longitude)
+      ],
+      show: true,
+      routeWhileDragging: true
+    }).addTo(map);
+
+    L.DomEvent.on(routeContol, 'click', this.mapQuest)
+
     // fixes partial loads with a manual resizing set asynchronously
     setTimeout(()=> {
       map.invalidateSize();
-    }, 100)
+    }, 100);
     this.mapEvents(map);
     this.mapLayerOperations(mapTileLayer);
+  }
+
+  mapQuest = e => {
+    debugger;
+    console.log(e);
   }
 
   componentDidUpdate() {
@@ -41,9 +71,10 @@ class Map extends React.Component {
 
   /* Used to register/add map events and the like */
   mapEvents = (map) => {
-    map.on('click', evt => this.clickOnMap(evt, map));
     map.on('zoom', this.zoomMap)
   }
+
+
 
   /* Used for map tile stuff */
   mapLayerOperations = (layer) => {
@@ -52,27 +83,6 @@ class Map extends React.Component {
 
   zoomMap = evt => {
     this.props.changeZoomLevel(evt.target._zoom);
-  }
-
-  // click on map -> add a marker, marker lat and long kept in store
-  clickOnMap = (evt, map) => {
-    const { lat, lng } = evt.latlng;
-
-    let otherLayers = Object.keys(evt.target._layers);
-
-    if (otherLayers.length >= 1) {
-      otherLayers.forEach((layer, index) => {
-        if (index > 0) {evt.target.removeLayer(evt.target._layers[layer])}
-      })
-    }
-
-    this.props.changeCoordinates(lat, lng);
-
-    const marker = L.marker([ lat, lng], { draggable: true, interactive: true }).addTo(evt.target);
-    map.invalidateSize();
-    evt.target.options.center = [lat, lng];
-    evt.target.panTo(evt.latlng);
-    marker.on('dragend', this.handleMarkerDrag);
   }
 
   handleMarkerDrag = (e) => {

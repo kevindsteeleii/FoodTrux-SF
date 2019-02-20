@@ -6,6 +6,9 @@ export const CHANGE_ZOOM = 'CHANGE_ZOOM';
 export const RADIUS_CHANGE = 'RADIUS_CHANGE';
 export const GET_ALL_TRUCKS = 'GET_ALL_TRUCKS';
 
+export const ADD_TO_FOODLIST = 'ADD_TO_FOODLIST';
+export const ADD_TO_FOOD_HASH = 'ADD_TO_FOOD_HASH';
+
 export const SELECT_TRUCK = 'SELECT_TRUCK';
 export const ASYNC_ERROR = 'ASYNC_ERROR';
 

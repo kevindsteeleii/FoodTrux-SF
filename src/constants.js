@@ -28,6 +28,5 @@ export const FILTERED_TRUCKS = 'FILTERED_TRUCKS';
 /* Base URLs */
 export const ALL_TRUCKS_URL = 'https://data.sfgov.org/resource/6a9r-agq8.json'
 
-export const MAP_KEY = 'pk.eyJ1Ijoia2V2aW5kc3RlZWxlaWkiLCJhIjoiY2pzOWRjdGI1MGRrdjN5cWQwMGpkbG16NSJ9.s-ZvEKfX_aDw1bYeU-DP_g'
 /* Measurements and such */
 // export const R = 3959; // earth's radius in miles

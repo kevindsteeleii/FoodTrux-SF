@@ -3,7 +3,6 @@ import L from 'leaflet';
 import 'leaflet-routing-machine';
 import { connect } from 'react-redux';
 
-// import { MAPBOX_API_TOKEN as accessToken } from '../secret';
 import * as _ from '../redux/actions/baseActions';
 import '../stylesheets/mapComponents.scss';
 
@@ -17,14 +16,12 @@ class Map extends React.Component {
       zoom
     });
 
-    const token = require('../secret').MAPBOX_API_TOKEN;
-    
     const tileURL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
     const mapTileLayer = new L.TileLayer(tileURL, {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18, 
       minZoom: 12, 
-      accessToken: token, 
+      accessToken: process.env.REACT_APP_TOKEN, 
       id: 'mapbox.streets'
     });
 
@@ -44,7 +41,7 @@ class Map extends React.Component {
       }
     })
 
-    // _NOTE: works but needs tweaking
+  /*   // _NOTE: works but needs tweaking
     // const routeContol = L.Routing.control({
     //   waypoints: [
     //     L.latLng(latitude, longitude)
@@ -52,7 +49,7 @@ class Map extends React.Component {
     //   show: true,
     //   routeWhileDragging: true
     // }).addTo(map);
-
+ */
     // fixes partial loads with a manual resizing set asynchronously
     setTimeout(()=> {
       map.invalidateSize();

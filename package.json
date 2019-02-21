@@ -2,7 +2,6 @@
   "name": "food_trux-sf",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kevindsteeleii.github.io/foodtrux-sf",
   "dependencies": {
     "await-to-js": "^2.1.1",
     "axios": "^0.18.0",

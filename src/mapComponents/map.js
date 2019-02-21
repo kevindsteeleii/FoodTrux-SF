@@ -21,7 +21,7 @@ class Map extends React.Component {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18, 
       minZoom: 12, 
-      accessToken: process.env.REACT_APP_TOKEN, 
+      accessToken: require('../constants').MAP_KEY, 
       id: 'mapbox.streets'
     });
 

@@ -2,10 +2,18 @@
 
 div#map {
   position: relative;
-  height: 50vw;
-  width: 50vw;
+  height: 40vw;
+  width: 40vw;
   border: 2px transparent solid;
   cursor: pointer;
   grid-area: 3 / 2 / 4/ 3;
   justify-self: flex-end;
+}
+/* Class for map when it's sharing the screen with  truck listing*/
+.share-map-lg {
+  grid-area: 3 / 2 / 4/ 3;
+}
+/*class for map when the truck listing is hidden at large screen size */
+.just-map-lg {
+  grid-area: 3 / 2 / 4/ 3; /* NOTE: change later, after looking at screen needs and sizing */
 }

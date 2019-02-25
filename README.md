@@ -1,4 +1,4 @@
-FoodTrux-SF
+[FoodTrux-SF](https://foodtrux-sf.netlify.com/)
 =============
 
 A real-time service that tells the user what types of food trucks might be found near a specific location on a map.
@@ -9,7 +9,7 @@ It uses **LeafletJS** for the interactive map, **MapBox API** for the map tiles,
 ![ScreenShot](./src/_images/screenShot.png)
 
 Project Idea came from [here](https://github.com/team-gary/code-challenge).
-### Features
+### v1.0 Features
 - [x] Use downtown San Francisco as default location
 - Change location data regardless of actual location by:
   - [x] dragging the marker or 
@@ -19,8 +19,7 @@ Project Idea came from [here](https://github.com/team-gary/code-challenge).
 - [ ] Navigation Routes from one point to another
 - [ ] Enter an address for start and get navigation steps to selected truck
 - [ ] show all trucks on map
-  - [ ] filter them in filter mode
-- [ ] Change search radius for Food Trucks
+- [x] Change search radius for Food Trucks
 - [ ] Autocomplete search by food type
 - [ ] Sort and filter by food types
 

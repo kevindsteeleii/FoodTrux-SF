@@ -9,7 +9,7 @@ import '../stylesheets/mapComponents.scss';
 class Map extends React.Component {
 
   componentDidMount(){
-    const { latitude, longitude, zoom } = this.props;
+    const { latitude, longitude, zoom, filteredTrucks } = this.props;
 
     const map = new L.map('map', {
       center: new L.LatLng(latitude, longitude), 
@@ -40,8 +40,15 @@ class Map extends React.Component {
         this.props.changeCoordinates(lat, lng);
       }
     })
+    if (filteredTrucks !== undefined) {
+      filteredTrucks.forEach(truck => {
+        let truckMark = L.marker
+      // if(truck.)
+      });
+    }
+    
 
-  /*   // _NOTE: works but needs tweaking
+  /*   // NOTE: works but needs tweaking
     // const routeContol = L.Routing.control({
     //   waypoints: [
     //     L.latLng(latitude, longitude)
@@ -73,8 +80,6 @@ class Map extends React.Component {
     map.on('zoom', this.zoomMap)
   }
 
-
-
   /* Used for map tile stuff */
   mapLayerOperations = (layer) => {
 
@@ -101,7 +106,7 @@ const mapStateToProps = state => ({
   latitude: state.base.latitude,
   longitude: state.base.longitude,
   zoom: state.base.zoom,
-  filteredTrucks: state.filter.filteredTrucks
+  filteredTrucks: state.base.filteredTrucks
 });
 
 const mapDispatchToProps = dispatch => ({

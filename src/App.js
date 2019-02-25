@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Header from './containers/header';
 import Title from './components/title';
-import FilterDash from './containers/filterDashboard';
+import FilterDashboard from './containers/filterDashboard';
 import Map from './mapComponents/map';
 import TruckList from './containers/truckList';
 
@@ -15,6 +15,13 @@ class App extends React.Component {
   
   componentDidMount(){
     this.props.getTrucks();
+    const { foodTrucks } = this.props;
+    this.props.initFilterTrucks(foodTrucks);
+  }
+
+  componentDidUpdate() {
+    const { foodTrucks } = this.props;
+    this.props.initFilterTrucks(foodTrucks);
   }
 
   render() {
@@ -22,7 +29,7 @@ class App extends React.Component {
       <div id="App">
         <Header>
           <Title/>
-          <FilterDash/>
+          <FilterDashboard/>
         </Header>
         <Map/>
         <TruckList/>
@@ -40,7 +47,7 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => (
   {
     getTrucks: () => dispatch(_actions.getTrucks()),
-    getFilteredTrucks: (val) => dispatch(_filter.getFilteredTrucks(val)),
+    initFilterTrucks: (trucks) => dispatch(_filter.initFilterTrucks(trucks))
   }
 )
 

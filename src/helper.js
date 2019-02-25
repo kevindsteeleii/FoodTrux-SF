@@ -27,3 +27,16 @@ export const miToKM = (mi) => {
   const KM = mi * 1.60934;
   return KM;
 }
+
+// calculates distance of available trucks and returns the ones within radius
+export const getCloseTrucks = ({lat, lng, radius, trucks}) => {
+  const filterTrucks = trucks.filter(truck => {
+    let truckLat = parseFloat(truck.latitude);
+    let truckLng = parseFloat(truck.longitude);
+    let dist = distanceInMiles([lat, lng], [truckLat, truckLng]);
+    if (dist !== undefined && dist <= radius) {
+      return truck
+    }
+  })
+  return filterTrucks;
+}

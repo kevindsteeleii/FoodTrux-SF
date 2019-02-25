@@ -30,12 +30,12 @@ export const getTrucks = () => {
       /* filters for trucks that  don't have latitude/longitude data, food items listed, an address, hours of operation,aren't approved, and not a truck */
     // eslint-disable-next-line
       const sortData = presortData.filter(item => {
-        if ((item.latitude !== item.longitude) && !!item.fooditems && !!item.address && !!item.dayshours && item.status === 'APPROVED' && item.facilitytype === 'Truck') 
+        if ((!!item.latitude && !!item.longitude) && !!item.fooditems && !!item.address && !!item.dayshours && item.status === 'APPROVED' && item.facilitytype === 'Truck') 
         {
           return item;
         }
       })
-      return dispatch({ type: _.GET_ALL_TRUCKS, payload: sortData});
+      dispatch({ type: _.GET_ALL_TRUCKS, payload: sortData});
     }) // if error occurs...
     .catch(err => dispatch({ type: _.ASYNC_ERROR, payload: err}));
   }
@@ -47,6 +47,7 @@ export const getTrucks = () => {
 export const getAvailableFoods = (trucks) => {
   return (dispatch) =>{
     const unFilteredFoods = [];
+    // eslint-disable-next-line
     const foodHash = {};
 
     // just appends the formatted string with the list of items with

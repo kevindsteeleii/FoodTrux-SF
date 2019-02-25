@@ -1,7 +1,28 @@
 import * as _ from '../../constants';
+import * as _help from '../../helper';
 
-export const filterByRadius = (val) => {
-  return (dispatch) => { dispatch({type: _.FILTER_WITHIN_RADIUS, payload: val}) }
+// loads once upon initial mount, by default filter trucks are all available trucks, the filter conditions reduces the number
+export const initFilterTrucks = (val) => {
+  return (dispatch) => dispatch({ type: _.SET_FILTERED_TRUCKS, payload: val })
+}
+
+export const filterByRadius = ({radius, latitude, longitude, filteredTrucks}) => {
+  const payload = filteredTrucks.filter(truck => {
+    let truckLat = parseFloat(truck.latitude);
+    let truckLng = parseFloat(truck.longitude);
+
+    let distance = _help.distanceInMiles([latitude, longitude], [truckLat, truckLng]);
+    if (distance !== undefined && distance <= radius) {
+      return truck;
+    }
+
+  })
+  return (dispatch) => { dispatch({type: _.SET_FILTERED_TRUCKS, payload }) }
+}
+
+// changes radius to search for food trucks in
+export const radiusChange = (val) => {
+  return (dispatch) => { dispatch({type: _.RADIUS_CHANGE, payload: val}) }
 }
 
 // turns on the filter by food items
@@ -32,6 +53,6 @@ export const filterIfOpen = (val) => {
 }
 
 // onComponentDidMount -> filter vals are checked and filtered list is returned 
-export const getFilteredTrucks = (val) => {
-  return (dispatch) =>  { dispatch({ type: _.FILTERED_TRUCKS, payload: val}) }
+export const setFilteredTrucks = (val) => {
+  return (dispatch) =>  { dispatch({ type: _.SET_FILTERED_TRUCKS, payload: val}) }
 }

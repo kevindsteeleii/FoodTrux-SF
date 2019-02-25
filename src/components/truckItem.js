@@ -32,7 +32,8 @@ const truckItem = (props) =>{
 
 /* Retrieves food items of truck as an array */
 const getFoodList = (fooditems) => fooditems.replace('.', '').split(/\s*[:&]\s*/)
-  .filter(item => {
+// eslint-disable-next-line  
+.filter(item => {
     if (item !== 'Cold Truck') {
       return item;
     }

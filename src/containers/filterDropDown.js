@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+import FilterRange from '../components/filterRange';
+import * as _filter from '../redux/actions/filterActions';
 import '../stylesheets/filter.scss';
 
 class FilterDropDown extends React.Component{
-
   componentDidUpdate() {
     this.checkToggle(this.props);
   }
@@ -31,10 +33,12 @@ class FilterDropDown extends React.Component{
   }
 
   render() {
-    const { toggle, children } = this.props;
+    const { toggle } = this.props;
     return(<>
       <div id="filter-dropdown">
-        {toggle && children }
+        {toggle && <>
+          <FilterRange/>
+        </>}
       </div>
     </>);
   }

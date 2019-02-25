@@ -1,8 +1,8 @@
 import * as _ from '../../constants';
-/* Reducer for filter modes wh/ can overlap */
-
+/* NOTE: Reducer for filter modes wh/ can overlap */
 const initialState = {
-  filterWithinRadius: true,
+  filterWithinRadius: true, // will probably never be toggled
+  // NOTE: may want to add an option to increase/decrease the size by feet and/or miles
   radius: 0.189, // in miles by default it's appx. 1000 ft.
   filterByFoodItems: false,
   filterWhenOpen: false,
@@ -14,6 +14,7 @@ export const filter = (state = initialState, { type, payload}) => {
   let { filterWithinRadius, radius, filterByFoodItems, filterWhenOpen, filteredFoodList, filteredTrucks } = state;
 
   switch(type) {
+
     case _.FILTER_WITHIN_RADIUS:
       payload = filterWithinRadius;
       return {...state, filterWithinRadius};
@@ -47,7 +48,7 @@ export const filter = (state = initialState, { type, payload}) => {
       payload = filterWhenOpen;
       return {...state, filterWhenOpen};
 
-    case _.FILTERED_TRUCKS:
+    case _.SET_FILTERED_TRUCKS:
       filteredTrucks = payload;
       return {...state, filteredTrucks};
 

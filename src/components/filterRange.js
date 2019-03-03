@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import * as _helper from '../helper';
 import * as _filter from '../redux/actions/filterActions';
 import '../stylesheets/filter.scss';
 
@@ -21,7 +20,7 @@ const FilterRange = (props) => {
       {radius >= 1 
         ?<span>{radius.toFixed(3)} Miles</span> 
         :<span>{feet} Feet</span>}
-
+      <br/>
       <input type="range" name="radius" value={radius} min={0.0579} max={6.0} id="radius-slider" step={.0005} onChange={handleVolumeChange}/>
     </div>
   </>)

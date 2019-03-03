@@ -31,6 +31,7 @@ const truckItem = (props) =>{
 }
 
 /* Retrieves food items of truck as an array */
+ // eslint-disable-next-line 
 const getFoodList = (fooditems) => fooditems.replace('.', '').split(/\s*[:&]\s*/)
 // eslint-disable-next-line  
 .filter(item => {
@@ -43,13 +44,14 @@ const getFoodList = (fooditems) => fooditems.replace('.', '').split(/\s*[:&]\s*/
 const handleItemClick = (e, props) => {
   const { 
     /* address, applicant, dayshours, */
+     // eslint-disable-next-line 
     fooditems/* , latitude, longitude,
     schedule, status */
   } = props.truck;
-  const foodList = getFoodList(fooditems);
+  // const foodList = getFoodList(fooditems);
   const { selectTruck } = props;
   // _TEMPORARY: remove once food list and food hash states work!!
-  console.log(`Food List: ${foodList}`);
+  console.log(props.truck);
   selectTruck(props.truck);
 }
 // *TODO: add an action that pops up a modal with expanded detail view of individual truck items

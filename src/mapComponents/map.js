@@ -7,17 +7,18 @@ import * as _ from '../redux/actions/baseActions';
 import '../stylesheets/mapComponents.scss';
 
 class Map extends React.Component {
-
   componentDidMount(){
-    const { latitude, longitude, zoom, filteredTrucks } = this.props;
+    const { latitude, longitude, zoom, radius } = this.props;
+    // REFACTOR: initialize cirle markers to invisible, make visible if they are touching/overlapping w/ radarCircle
+    this.localTrucks = [];
 
-    const map = new L.map('map', {
+    this.map = new L.map('map', {
       center: new L.LatLng(latitude, longitude), 
       zoom
     });
 
     const tileURL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
-    const mapTileLayer = new L.TileLayer(tileURL, {
+    this.tileLayer = new L.TileLayer(tileURL, {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18, 
       minZoom: 12, 
@@ -25,13 +26,13 @@ class Map extends React.Component {
       id: 'mapbox.streets'
     });
 
-    map.addLayer(mapTileLayer);
+    this.map.addLayer(this.tileLayer);
 
     const marker = L.marker(L.latLng(latitude, longitude), {
       draggable: true    
-    })
+    });
 
-    marker.addTo(map);
+    marker.addTo(this.map);
     marker.on('click dragend', e => {
       // e.type is the event so either 'click' or 'dragend'
       if (e.type === 'dragend'){
@@ -39,45 +40,56 @@ class Map extends React.Component {
         const { lat, lng} = e.target._latlng;
         this.props.changeCoordinates(lat, lng);
       }
-    })
-    if (filteredTrucks !== undefined) {
-      filteredTrucks.forEach(truck => {
-        let truckMark = L.marker
-      // if(truck.)
-      });
+    });
+    this.radarStyle = {
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.5
     }
-    
+    this.radarCircle = L.circle([latitude, longitude], {
+      ...this.radarStyle,
+      radius: 1609.34 * radius
+    }).addTo(this.map)
 
-  /*   // NOTE: works but needs tweaking
-    // const routeContol = L.Routing.control({
-    //   waypoints: [
-    //     L.latLng(latitude, longitude)
-    //   ],
-    //   show: true,
-    //   routeWhileDragging: true
-    // }).addTo(map);
- */
     // fixes partial loads with a manual resizing set asynchronously
     setTimeout(()=> {
-      map.invalidateSize();
+      this.map.invalidateSize();
     }, 100);
-    this.mapEvents(map);
-    this.mapLayerOperations(mapTileLayer);
-  }
-
-  mapQuest = e => {
-    debugger;
-    console.log(e);
-  }
-
-  componentDidUpdate() {
-    // fixes the partial loading problem with leaflet
+    this.mapEvents();
+    this.mapLayerOperations(this.tileLayer);
     window.dispatchEvent(new Event('resize'));
   }
 
+  componentDidUpdate() {
+    this.radarCircle.remove(); // remove original one, so it teleports
+    // REFACTOR: initialize cirle markers to invisible, make visible if they are touching/overlapping w/ radarCircle
+    this.localTrucks.forEach(localT => {
+      localT.remove()
+    });
+    const { filteredTrucks, latitude, longitude, radius } = this.props;
+    // fixes the partial loading problem with leaflet
+    window.dispatchEvent(new Event('resize'));
+    if (filteredTrucks !== undefined && filteredTrucks.length > 0) {
+      filteredTrucks.forEach(truck => {
+        let {latitude, longitude} = truck;
+        latitude = parseFloat(latitude);
+        longitude = parseFloat(longitude);
+        const localTruck = L.circle([latitude, longitude]).addTo(this.map);
+        // REFACTOR: initialize cirle markers to invisible, make visible if they are touching/overlapping w/ radarCircle
+        this.localTrucks.push(localTruck);
+      });
+    }
+    this.radarCircle = L.circle([latitude, longitude], {
+      ...this.radarStyle,
+      radius: 1609.34 * radius
+    }).addTo(this.map)
+  }
+
+
+
   /* Used to register/add map events and the like */
   mapEvents = (map) => {
-    map.on('zoom', this.zoomMap)
+    this.map.on('zoom', this.zoomMap)
   }
 
   /* Used for map tile stuff */
@@ -106,7 +118,8 @@ const mapStateToProps = state => ({
   latitude: state.base.latitude,
   longitude: state.base.longitude,
   zoom: state.base.zoom,
-  filteredTrucks: state.base.filteredTrucks
+  filteredTrucks: state.filter.filteredTrucks,
+  radius: state.filter.radius
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,8 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import FilterRange from '../components/filterRange';
-import * as _filter from '../redux/actions/filterActions';
 import '../stylesheets/filter.scss';
 
 class FilterDropDown extends React.Component{

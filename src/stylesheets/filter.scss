@@ -42,4 +42,8 @@ div.visible {
   height: 15vh;
 }
 
+div#filter-range {
+  display: flexbox;
+  flex-direction: column;
+}
 

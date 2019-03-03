@@ -28,9 +28,26 @@ export const miToKM = (mi) => {
   return KM;
 }
 
+export const miToMeters = (mi) => {
+  const M = miToKM(mi) * 1000;
+  return M;
+}
+
+export const ftToMeters = (ft) => {
+  const M = ft * 0.3048;
+  return M;
+}
+
+export const metersToFt = (m) => {
+  const FT = m * 3.28084;
+  return FT;
+}
+
 // calculates distance of available trucks and returns the ones within radius
 export const getCloseTrucks = ({lat, lng, radius, trucks}) => {
+   // eslint-disable-next-line 
   const filterTrucks = trucks.filter(truck => {
+    /* NOTE: Culls the trucks by location data, it got a bit complicated. Will revisit on later refactors. */
     let truckLat = parseFloat(truck.latitude);
     let truckLng = parseFloat(truck.longitude);
     let dist = distanceInMiles([lat, lng], [truckLat, truckLng]);

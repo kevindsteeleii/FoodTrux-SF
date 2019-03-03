@@ -3,15 +3,26 @@ import * as _help from '../../helper';
 
 // loads once upon initial mount, by default filter trucks are all available trucks, the filter conditions reduces the number
 export const initFilterTrucks = (val) => {
-  return (dispatch) => dispatch({ type: _.SET_FILTERED_TRUCKS, payload: val })
+  /* Cull trucks w/ location info I'm using i.e. lat and lng
+    REFACTOR: check for other data to be used for geolocation, maybe a table idk ;)
+  */
+  // eslint-disable-next-line 
+  const payload = val.filter(truck => {
+    const {latitude, longitude} = truck;
+    if (latitude !== undefined && longitude !== undefined) {
+      return truck;
+    }
+  })
+  return (dispatch) => dispatch({ type: _.SET_FILTERED_TRUCKS, payload })
 }
-
-export const filterByRadius = ({radius, latitude, longitude, filteredTrucks}) => {
-  const payload = filteredTrucks.filter(truck => {
+ // eslint-disable-next-line 
+export const filterByRadius = ({radius, lat, lng, trucks}) => {
+   // eslint-disable-next-line 
+  const payload = trucks.filter(truck => {
     let truckLat = parseFloat(truck.latitude);
     let truckLng = parseFloat(truck.longitude);
 
-    let distance = _help.distanceInMiles([latitude, longitude], [truckLat, truckLng]);
+    let distance = _help.distanceInMiles([lat, lng], [truckLat, truckLng]);
     if (distance !== undefined && distance <= radius) {
       return truck;
     }

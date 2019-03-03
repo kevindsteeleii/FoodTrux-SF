@@ -18,10 +18,10 @@ Project Idea came from [here](https://github.com/team-gary/code-challenge).
 - [ ] "Click for more info" for each individual truck button/interface
 - [ ] Navigation Routes from one point to another
 - [ ] Enter an address for start and get navigation steps to selected truck
-- [ ] show all trucks on map
+- [x] show all trucks on map (if available)
 - [x] Change search radius for Food Trucks
-- [ ] Autocomplete search by food type
-- [ ] Sort and filter by food types
+~~- [ ] Autocomplete search by food type~~
+~~- [ ] Sort and filter by food types~~
 
 ### Technologies/Languages:
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)

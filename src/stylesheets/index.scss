@@ -3,6 +3,7 @@ $title-green: rgb(76, 180, 28);
 $font-montserrat: 'Montserrat', sans-serif;
 $font-noto-sans: 'Noto Sans', sans-serif;
 
+
 html {
   scroll-behavior: smooth;
 }
@@ -10,6 +11,7 @@ html {
  :root, body{
   margin: 0;
   padding: 0;
+  height: 100vh;
   // overflow will mess up the map since it has to get tiles from outside of its borders
   // this caused a css contamination
   overflow: hidden;

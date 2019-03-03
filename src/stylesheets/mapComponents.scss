@@ -2,6 +2,7 @@
 
 div#map {
   position: relative;
+  z-index: 1;
   height: 40vw;
   width: 40vw;
   border: 2px transparent solid;

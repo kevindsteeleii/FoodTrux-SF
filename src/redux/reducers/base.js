@@ -40,6 +40,9 @@ export const base = (state = initialState, { type, payload }) => {
       selectedTruck = payload;
       return {...state, selectedTruck};
 
+    case _.DESELECT_TRUCK:
+      return {...state, selectedTruck: null}
+
     case _.TOGGLE_MODAL:
       modalVisible = payload;
       return {...state, modalVisible}

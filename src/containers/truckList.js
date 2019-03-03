@@ -3,27 +3,19 @@ import { connect } from 'react-redux';
 
 import TruckItem from '../components/truckItem';
 import * as _filter from '../redux/actions/filterActions';
+import * as _help from '../helper';
 import '../stylesheets/components.scss';
 /* REFACTOR: turn into a class to slow down the callstack */
 const TruckList = (props) => {
-
-  useEffect(() => {
-    filterTrucks(props);
-  });
 
   return(<div id="truck-list">
     {getFilteredTrucks(props)}
   </div>)
 }
 
-const getFilteredTrucks = ({filteredTrucks}) => {
-  // let filteredTrucks = _help.getCloseTrucks(props); // make them into the filtered trucks in state here!!
-  const truckItems =  filteredTrucks.map(truck => <TruckItem key={`${truck.applicant}-${truck.objectid}`} truck={truck} />);
-  return truckItems;
-}
-
-const filterTrucks = (props) => {
-  props.filterByRadius(props);
+const getFilteredTrucks = (props) => {
+  const truckItems =  _help.getCloseTrucks(props)
+  return truckItems.map(truck => <TruckItem lat={parseFloat(truck.latitude)} lng={parseFloat(truck.longitude)} key={`${truck.applicant}-${truck.objectid}`} truck={truck} />);
 }
 
 const mapStateToProps = (state) => ({
@@ -35,8 +27,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  initFilterTrucks: (trucks) => dispatch(_filter.initFilterTrucks(trucks)),
-  filterByRadius: (props) => dispatch(_filter.filterByRadius(props))
+  initFilterTrucks: (trucks) => dispatch(_filter.initFilterTrucks(trucks))
 })
 
 

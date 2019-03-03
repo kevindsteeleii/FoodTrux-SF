@@ -44,9 +44,9 @@ export const metersToFt = (m) => {
 }
 
 // calculates distance of available trucks and returns the ones within radius
-export const getCloseTrucks = ({lat, lng, radius, trucks}) => {
+export const getCloseTrucks = ({lat, lng, radius, filteredTrucks}) => {
    // eslint-disable-next-line 
-  const filterTrucks = trucks.filter(truck => {
+  const filterTrucks = filteredTrucks.filter(truck => {
     /* NOTE: Culls the trucks by location data, it got a bit complicated. Will revisit on later refactors. */
     let truckLat = parseFloat(truck.latitude);
     let truckLng = parseFloat(truck.longitude);
@@ -56,4 +56,18 @@ export const getCloseTrucks = ({lat, lng, radius, trucks}) => {
     }
   })
   return filterTrucks;
+}
+// calculates distance of available trucks and returns the ones within radius
+export const isTruckClose = ({latitude, longitude, radius}, lat, lng) => {
+   // eslint-disable-next-line 
+
+    let truckLat = parseFloat(lat);
+    let truckLng = parseFloat(lng);
+    let dist = distanceInMiles([latitude, longitude], [truckLat, truckLng]);
+    // debugger;
+    if (dist !== undefined && dist <= radius) {
+      return true;
+    } else {
+      return false;
+    }
 }

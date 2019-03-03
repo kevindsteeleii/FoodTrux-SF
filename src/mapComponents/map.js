@@ -3,6 +3,7 @@ import L from 'leaflet';
 import 'leaflet-routing-machine';
 import { connect } from 'react-redux';
 
+import * as _help from '../helper';
 import * as _ from '../redux/actions/baseActions';
 import '../stylesheets/mapComponents.scss';
 
@@ -72,11 +73,11 @@ class Map extends React.Component {
     if (filteredTrucks !== undefined && filteredTrucks.length > 0) {
       filteredTrucks.forEach(truck => {
         let {latitude, longitude} = truck;
-        latitude = parseFloat(latitude);
-        longitude = parseFloat(longitude);
-        const localTruck = L.circle([latitude, longitude]).addTo(this.map);
-        // REFACTOR: initialize cirle markers to invisible, make visible if they are touching/overlapping w/ radarCircle
-        this.localTrucks.push(localTruck);
+        
+        if (_help.isTruckClose(this.props, latitude, longitude)) {
+          const localTruck = L.circle([latitude, longitude]).addTo(this.map);
+          this.localTrucks.push(localTruck);
+        }
       });
     }
     this.radarCircle = L.circle([latitude, longitude], {

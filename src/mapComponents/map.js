@@ -10,7 +10,6 @@ import '../stylesheets/mapComponents.scss';
 class Map extends React.Component {
   componentDidMount(){
     const { latitude, longitude, zoom, radius } = this.props;
-    // REFACTOR: initialize cirle markers to invisible, make visible if they are touching/overlapping w/ radarCircle
     this.localTrucks = [];
 
     this.map = new L.map('map', {
@@ -63,7 +62,6 @@ class Map extends React.Component {
 
   componentDidUpdate() {
     this.radarCircle.remove(); // remove original one, so it teleports
-    // REFACTOR: initialize cirle markers to invisible, make visible if they are touching/overlapping w/ radarCircle
     this.localTrucks.forEach(localT => {
       localT.remove()
     });

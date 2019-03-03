@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Modal from './containers/modal';
+// import Modal from './containers/modal';
 import Header from './containers/header';
 import Title from './components/title';
 import FilterDashboard from './containers/filterDashboard';

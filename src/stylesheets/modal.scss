@@ -1,0 +1,28 @@
+@import "index.scss";
+
+$modal-height: 50vh;
+$modal-margin-top: calc(50vh - calc(#{$modal-height}/2));
+
+/* Modal styling */
+div#modal{
+  position: absolute;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 120%;
+  background-color: rgba(0,0,0, .5);
+
+}
+
+div#modal-box{
+  margin: 0 auto;
+  z-index: 3;
+  margin-top: $modal-margin-top;
+  color: white;
+  width: 500px;
+  height: $modal-height;
+  background-color: red;
+}

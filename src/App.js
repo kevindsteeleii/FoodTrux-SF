@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// import Modal from './containers/modal';
 import Header from './containers/header';
 import Title from './components/title';
 import FilterDashboard from './containers/filterDashboard';
@@ -17,7 +18,8 @@ class App extends React.Component {
   }
 
   render() {
-    return (<>
+    return (<div style={{ position: "relative" }}>
+      {/* <Modal/> */}
       <div id="App">
         <Header>
           <Title/>
@@ -26,7 +28,8 @@ class App extends React.Component {
         <MyMap/>
         <TruckList/>
       </div>
-    </>);
+      
+    </div>);
   }
 }
 

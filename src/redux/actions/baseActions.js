@@ -16,6 +16,10 @@ export const selectTruck = (payload) => {
   return (dispatch) => dispatch({ type: _.SELECT_TRUCK, payload });
 }
 
+export const deselectTruck = () => {
+  return (dispatch) => dispatch({ type: _.DESELECT_TRUCK})
+}
+
 // toggles modal on/off
 export const modalToggle = (payload) => {
   return (dispatch) => dispatch({ type: _.TOGGLE_MODAL, payload });
@@ -36,6 +40,7 @@ export const getTrucks = () => {
         }
       })
       dispatch({ type: _.GET_ALL_TRUCKS, payload: sortData});
+      dispatch({ type: _.SET_FILTERED_TRUCKS, payload: sortData })
     }) // if error occurs...
     .catch(err => dispatch({ type: _.ASYNC_ERROR, payload: err}));
   }

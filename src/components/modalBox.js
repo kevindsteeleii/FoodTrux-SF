@@ -9,9 +9,9 @@ const ModalBox = ({selectedTruck, deselectTruck, modalToggle}) => {
   return(<div id="modal-box">
     <XCircle actions={[deselectTruck, modalToggle]}/>
     <div className="modal-text">
-      <p>Name: {applicant}</p>
-      <p>Operational Hours: {dayshours}</p>
-      <p>Serves: {fooditems}</p>
+      <p><b>Name:</b> {applicant}</p>
+      <p><b>Operational Hours:</b> {dayshours}</p>
+      <p><b>Serves:</b> {fooditems.split(/:|;/).join(', ')}</p>
     </div>
     <button>Click for Directions</button>
   </div>)

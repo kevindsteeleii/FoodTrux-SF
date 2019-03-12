@@ -1,49 +1,51 @@
-import React from 'react';
-import L from 'leaflet';
-import 'leaflet-routing-machine';
-import { connect } from 'react-redux';
+import React from "react";
+import L from "leaflet";
+import "leaflet-routing-machine";
+import "leaflet.awesome-markers";
+import { connect } from "react-redux";
 
-import * as _help from '../helper';
-import * as _ from '../redux/actions/baseActions';
-import '../stylesheets/mapComponents.scss';
+import * as _help from "../helper";
+import * as _ from "../redux/actions/baseActions";
+import "../stylesheets/mapComponents.scss";
 
 class Map extends React.Component {
   componentDidMount(){
     const { latitude, longitude, zoom, radius } = this.props;
     this.localTrucks = [];
 
-    this.map = new L.map('map', {
+    this.map = new L.map("map", {
       center: new L.LatLng(latitude, longitude), 
       zoom
     });
 
-    const tileURL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+    const tileURL = "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}";
     this.tileLayer = new L.TileLayer(tileURL, {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18, 
+      attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, <a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>, Imagery © <a href='https://www.mapbox.com/'>Mapbox</a>",
+      maxZoom: 20, 
       minZoom: 12, 
       accessToken: process.env.REACT_APP_TOKEN, 
-      id: 'mapbox.streets'
+      id: "mapbox.streets"
     });
 
     this.map.addLayer(this.tileLayer);
 
     const marker = L.marker(L.latLng(latitude, longitude), {
-      draggable: true    
+      draggable: true
     });
 
-    marker.addTo(this.map);
-    marker.on('click dragend', e => {
-      // e.type is the event so either 'click' or 'dragend'
-      if (e.type === 'dragend'){
+    marker.addTo(this.map);    
+
+    marker.on("click dragend", e => {
+      // e.type is the event so either "click" or "dragend"
+      if (e.type === "dragend"){
         // change lat and long
         const { lat, lng} = e.target._latlng;
         this.props.changeCoordinates(lat, lng);
       }
     });
     this.radarStyle = {
-      color: 'red',
-      fillColor: '#f03',
+      color: "red",
+      fillColor: "#f03",
       fillOpacity: 0.5
     }
     this.radarCircle = L.circle([latitude, longitude], {
@@ -57,7 +59,7 @@ class Map extends React.Component {
     }, 100);
     this.mapEvents();
     this.mapLayerOperations(this.tileLayer);
-    window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(new Event("resize"));
   }
 
   componentDidUpdate() {
@@ -65,15 +67,30 @@ class Map extends React.Component {
     this.localTrucks.forEach(localT => {
       localT.remove()
     });
-    const { filteredTrucks, latitude, longitude, radius } = this.props;
+    const { filteredTrucks, latitude, longitude, radius, selectTruck, modalToggle } = this.props;
     // fixes the partial loading problem with leaflet
-    window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(new Event("resize"));
+
     if (filteredTrucks !== undefined && filteredTrucks.length > 0) {
       filteredTrucks.forEach(truck => {
         let {latitude, longitude} = truck;
-        
+
+        let foodTruckIcon = L.AwesomeMarkers.icon({
+          icon: 'map-pin',
+          prefix: 'fa',
+          className: 'map-pin'
+        });
+
         if (_help.isTruckClose(this.props, latitude, longitude)) {
-          const localTruck = L.circle([latitude, longitude]).addTo(this.map);
+          const localTruck = L.marker([latitude, longitude], {icon: foodTruckIcon})
+          .on("click", evt => {
+            if (evt.type === 'click') {
+              selectTruck(truck);
+              modalToggle(true);
+            }
+          })
+          .addTo(this.map);
+
           this.localTrucks.push(localTruck);
         }
       });
@@ -88,7 +105,7 @@ class Map extends React.Component {
 
   /* Used to register/add map events and the like */
   mapEvents = (map) => {
-    this.map.on('zoom', this.zoomMap)
+    this.map.on("zoom", this.zoomMap)
   }
 
   /* Used for map tile stuff */
@@ -123,7 +140,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   changeCoordinates: (lat, lng) => dispatch(_.changeCoords(lat, lng)),
-  changeZoomLevel: (zoom) => dispatch(_.zoom(zoom))
+  changeZoomLevel: (zoom) => dispatch(_.zoom(zoom)),
+  modalToggle: (val) => dispatch(_.modalToggle(val)),
+  selectTruck: (truck) => dispatch(_.selectTruck(truck))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

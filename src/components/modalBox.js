@@ -1,14 +1,31 @@
 import React from 'react';
+import * as _ from '../redux/actions/baseActions';
 import { connect } from 'react-redux';
 
-const ModalBox = ({selectedTruck}) => {
+import XCircle from '../_icons/xCircle';
+
+const ModalBox = ({selectedTruck, deselectTruck, modalToggle}) => {
+  const { applicant, dayshours, fooditems } = selectedTruck;
   return(<div id="modal-box">
-    <span>Put Truck info here.</span>
+    <XCircle actions={[deselectTruck, modalToggle]}/>
+    <div className="modal-text">
+      <p>Name: {applicant}</p>
+      <p>Operational Hours: {dayshours}</p>
+      <p>Serves: {fooditems}</p>
+    </div>
+    <button>Click for Directions</button>
   </div>)
 }
 
 const mapStateToProps = (state) => ({
-  selectedTruck: state.base.selectedTruck
+  selectedTruck: state.base.selectedTruck,
+  latitude: state.base.latitude,
+  longitude: state.base.longitude
 });
 
-export default connect(mapStateToProps)(ModalBox);
+const mapDispatchToProps = (dispatch) => ({
+  deselectTruck: () => dispatch(_.deselectTruck()),
+  modalToggle: (val) => dispatch(_.modalToggle(val))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalBox);

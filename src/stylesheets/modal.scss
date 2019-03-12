@@ -1,7 +1,8 @@
 @import "index.scss";
 
 $modal-height: 50vh;
-$modal-margin-top: calc(50vh - calc(#{$modal-height}/2));
+// $modal-margin-top: calc(50vh - calc(#{$modal-height}/2));
+$modal-margin-top: 50vh - $modal-height/2;
 
 /* Modal styling */
 div#modal{
@@ -19,10 +20,36 @@ div#modal{
 
 div#modal-box{
   margin: 0 auto;
+  padding-left: 20px;
+  // display: flex;
+  // flex-direction: column;
   z-index: 3;
   margin-top: $modal-margin-top;
   color: white;
   width: 500px;
   height: $modal-height;
-  background-color: red;
+  background-color: #424141;
+
+  svg {
+    float: right;
+    margin: 12px 12px;
+  }
+
+  svg:hover {
+    cursor: pointer;
+  }
+
+  .feather-x-circle {
+    stroke: black;
+    fill: white;
+    transform: scale(1.3);
+  }
+
+  div.modal-text {
+    display: grid;
+    height: 30vh;
+  }
 }
+
+
+

@@ -18,3 +18,24 @@ div#map {
 .just-map-lg {
   grid-area: 3 / 2 / 4/ 3; /* NOTE: change later, after looking at screen needs and sizing */
 }
+
+div.awesome-marker-icon-blue {
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+*.map-pin {
+  // transform-origin: top;
+  // transform: scale(1.5);
+
+  path {
+    color: #0a16c3;
+  }
+
+  path:hover {
+    cursor: pointer;
+  }
+}
+

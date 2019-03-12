@@ -3,7 +3,7 @@ import * as _ from '../../constants';
 const initialState = {
   latitude: 37.7946,
   longitude: -122.3999,
-  zoom: 13,
+  zoom: 16,
   foodTrucks : [],
   foodList: [],
   foodHash: {},

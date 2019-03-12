@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { selectTruck } from '../redux/actions/baseActions';
-import '../stylesheets/components.scss';
+import { selectTruck, modalToggle } from "../redux/actions/baseActions";
+import "../stylesheets/components.scss";
 /* Truck Object Internals (for reference)
 address: "147 FREMONT ST"
 applicant: "Mini Mobile Food Catering"
@@ -31,32 +31,27 @@ const truckItem = (props) =>{
 }
 
 /* Retrieves food items of truck as an array */
- // eslint-disable-next-line 
-const getFoodList = (fooditems) => fooditems.replace('.', '').split(/\s*[:&]\s*/)
-// eslint-disable-next-line  
-.filter(item => {
-    if (item !== 'Cold Truck') {
-      return item;
-    }
-  });
+//  // eslint-disable-next-line 
+// const getFoodList = (fooditems) => fooditems.replace(".", "").split(/\s*[:&]\s*/)
+// // eslint-disable-next-line  
+// .filter(item => {
+//     if (item !== "Cold Truck") {
+//       return item;
+//     }
+//   });
 
 // handles the onClick for truckItem
 const handleItemClick = (e, props) => {
-  const { 
-    /* address, applicant, dayshours, */
-     // eslint-disable-next-line 
-    fooditems/* , latitude, longitude,
-    schedule, status */
-  } = props.truck;
-  // const foodList = getFoodList(fooditems);
-  const { selectTruck } = props;
+  const { selectTruck, modalToggle } = props;
   // _TEMPORARY: remove once food list and food hash states work!!
   console.log(props.truck);
   selectTruck(props.truck);
+  modalToggle(true);
 }
 // *TODO: add an action that pops up a modal with expanded detail view of individual truck items
 const mapDispatchToProps = (dispatch) => ({
-  selectTruck: (val) => dispatch(selectTruck(val))
+  selectTruck: (val) => dispatch(selectTruck(val)),
+  modalToggle: (val) => dispatch(modalToggle(val))
 })
 
 export default connect(null, mapDispatchToProps)(truckItem);

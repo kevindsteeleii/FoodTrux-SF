@@ -60,6 +60,5 @@ export const getAvailableFoods = (trucks) => {
     for(let truck of trucks) {
       unFilteredFoods.push(truck.fooditems);
     }
-    
   }
 }

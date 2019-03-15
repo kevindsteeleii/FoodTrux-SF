@@ -43,23 +43,32 @@ class Map extends React.Component {
         this.props.changeCoordinates(lat, lng);
       }
     });
+
     this.radarStyle = {
       color: "red",
       fillColor: "#f03",
       fillOpacity: 0.5
     }
+
     this.radarCircle = L.circle([latitude, longitude], {
       ...this.radarStyle,
       radius: 1609.34 * radius
-    }).addTo(this.map)
+    }).addTo(this.map);
 
     // fixes partial loads with a manual resizing set asynchronously
     setTimeout(()=> {
       this.map.invalidateSize();
     }, 100);
-    this.mapEvents();
-    this.mapLayerOperations(this.tileLayer);
     window.dispatchEvent(new Event("resize"));
+
+    this.routing = L.Routing.control({   
+      waypoints: [
+        L.latLng(latitude, longitude)
+      ],
+      collapsible: true,
+      show: false
+    }).addTo(this.map);
+
   }
 
   componentDidUpdate() {
@@ -67,7 +76,7 @@ class Map extends React.Component {
     this.localTrucks.forEach(localT => {
       localT.remove()
     });
-    const { filteredTrucks, latitude, longitude, radius, selectTruck, modalToggle } = this.props;
+    const { filteredTrucks, radius, selectTruck, modalToggle, hasDirections, destinationLat, destinationLng } = this.props;
     // fixes the partial loading problem with leaflet
     window.dispatchEvent(new Event("resize"));
 
@@ -95,21 +104,25 @@ class Map extends React.Component {
         }
       });
     }
-    this.radarCircle = L.circle([latitude, longitude], {
+    this.radarCircle = L.circle([this.props.latitude, this.props.longitude], {
       ...this.radarStyle,
       radius: 1609.34 * radius
-    }).addTo(this.map)
-  }
+    }).addTo(this.map);
 
+      this.routing.setWaypoints([
+        L.latLng(this.props.latitude, this.props.longitude),
+        L.latLng(destinationLat, destinationLng)
+      ]);
 
+    if (hasDirections) {
+      // this.routing.setWaypoints([
+      //   L.latLng(this.props.latitude, this.props.longitude),
+      //   L.latLng(destinationLat, destinationLng)
+      // ]);
 
-  /* Used to register/add map events and the like */
-  mapEvents = (map) => {
-    this.map.on("zoom", this.zoomMap)
-  }
-
-  /* Used for map tile stuff */
-  mapLayerOperations = (layer) => {
+      // L.latLng(this.props.latitude, this.props.longitude),
+      // L.latLng(destinationLat, destinationLng)
+    }
 
   }
 
@@ -135,7 +148,10 @@ const mapStateToProps = state => ({
   longitude: state.base.longitude,
   zoom: state.base.zoom,
   filteredTrucks: state.filter.filteredTrucks,
-  radius: state.filter.radius
+  radius: state.filter.radius,
+  hasDirections: state.filter.hasDirections,
+  destinationLat: state.filter.destinationLat,
+  destinationLng: state.filter.destinationLng
 });
 
 const mapDispatchToProps = dispatch => ({

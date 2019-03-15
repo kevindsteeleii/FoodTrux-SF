@@ -11,6 +11,22 @@ export const zoom = (payload) => {
   return (dispatch) => dispatch({ type: _.CHANGE_ZOOM, payload });
 }
 
+export const toggleDirections = (payload) => {
+  return (dispatch) => dispatch({ type: _.TOGGLE_DIRECTIONS, payload });
+}
+
+export const setDestination = (payload) => {
+  return (dispatch) => {
+    dispatch({ type: _.SET_DESTINATION, payload });}
+}
+
+export const removeDirections = (payload) => {
+  return (dispatch) => {
+    dispatch({ type: _.SET_DESTINATION, payload: [null, null] });
+    dispatch({ type: _.TOGGLE_DIRECTIONS, payload: false });
+  }
+}
+
 // selects corresponding truck from click selection in truck listing
 export const selectTruck = (payload) => {
   return (dispatch) => dispatch({ type: _.SELECT_TRUCK, payload });

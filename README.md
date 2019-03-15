@@ -13,9 +13,9 @@ Project Idea came from [here](https://github.com/team-gary/code-challenge).
 - [x] Use downtown San Francisco as default location
 - Change location data regardless of actual location by:
   - [x] dragging the marker or 
-  - [ ] entering address manually
+  - ~~[ ] entering address manually~~
 - [x] List of trucks returned in the list is within the given radius
-- [ ] "Click for more info" for each individual truck button/interface
+- [x] "Click for more info" for each individual truck button/interface
 - [ ] Navigation Routes from one point to another
 - [ ] Enter an address for start and get navigation steps to selected truck
 - [x] show all trucks on map (if available)

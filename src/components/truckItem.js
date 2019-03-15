@@ -18,33 +18,24 @@ status: "APPROVED"
 */
 
 const truckItem = (props) =>{
-  const { applicant, fooditems } = props.truck
-  if (!!fooditems) {
-    // code to access food listing starts
-    // refer to flowchart diagram in black book
-  }
+  const { applicant } = props.truck;
+  // eslint-disable-next-line
+  const name = applicant.split(' ').filter((word, idx) => {
+    if (idx < 3) {
+      return word;
+    }
+  }).join(' ');
+  
   return (<>
       <div className="truck-item" onClick={e => handleItemClick(e, props)}>
-        <p>{applicant}</p>
+        <p>{name}</p>
       </div>
   </>);
 }
 
-/* Retrieves food items of truck as an array */
-//  // eslint-disable-next-line 
-// const getFoodList = (fooditems) => fooditems.replace(".", "").split(/\s*[:&]\s*/)
-// // eslint-disable-next-line  
-// .filter(item => {
-//     if (item !== "Cold Truck") {
-//       return item;
-//     }
-//   });
-
 // handles the onClick for truckItem
 const handleItemClick = (e, props) => {
   const { selectTruck, modalToggle } = props;
-  // _TEMPORARY: remove once food list and food hash states work!!
-  console.log(props.truck);
   selectTruck(props.truck);
   modalToggle(true);
 }

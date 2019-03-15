@@ -4,8 +4,21 @@ import { connect } from 'react-redux';
 
 import XCircle from '../_icons/xCircle';
 
-const ModalBox = ({selectedTruck, deselectTruck, modalToggle}) => {
+const ModalBox = ({selectedTruck, deselectTruck, modalToggle, toggleDirections, setDestination}) => {
   const { applicant, dayshours, fooditems } = selectedTruck;
+
+  function setDirectionsInfo(evt) {
+    evt.preventDefault();
+    let { latitude, longitude} = selectedTruck;
+    latitude = parseFloat(latitude);
+    longitude = parseFloat(longitude);
+    toggleDirections(true);
+    modalToggle(false);
+    setDestination([latitude, longitude]);
+    // setDirections
+    evt.persist();
+  }
+
   return(<div id="modal-box">
     <XCircle actions={[deselectTruck, modalToggle]}/>
     <div className="modal-text">
@@ -13,7 +26,7 @@ const ModalBox = ({selectedTruck, deselectTruck, modalToggle}) => {
       <p><b>Operational Hours:</b> {dayshours}</p>
       <p><b>Serves:</b> {fooditems.split(/:|;/).join(', ')}</p>
     </div>
-    <button>Click for Directions</button>
+    <button onClick={setDirectionsInfo} >Click for Directions</button>
   </div>)
 }
 
@@ -25,7 +38,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deselectTruck: () => dispatch(_.deselectTruck()),
-  modalToggle: (val) => dispatch(_.modalToggle(val))
+  modalToggle: (val) => dispatch(_.modalToggle(val)),
+  toggleDirections: (val) => dispatch(_.toggleDirections(val)),
+  setDestination: (val) => dispatch(_.setDestination(val))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalBox);

@@ -21,14 +21,13 @@ div#modal{
 div#modal-box{
   margin: 0 auto;
   padding-left: 20px;
-  // display: flex;
-  // flex-direction: column;
   z-index: 3;
   margin-top: $modal-margin-top;
   color: white;
   width: 500px;
   height: $modal-height;
   background-color: #424141;
+  border-radius: 10px;
 
   svg {
     float: right;
